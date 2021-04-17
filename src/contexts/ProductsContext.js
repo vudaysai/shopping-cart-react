@@ -16,7 +16,7 @@ const ProductsContextProvider = ({ children }) => {
 				.then(res => res.json())
 				.then(
 					(result) => {
-						setProducts(result)
+						setProducts(result || [])
 					},
 					(error) => {
 						console.log(error)
