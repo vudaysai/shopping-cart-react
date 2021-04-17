@@ -28,10 +28,26 @@ export default function Login () {
       })
     }).then((response) => response.json())
       .then((responseJson) => {
+        if (responseJson.success) {
+          store.addNotification({
+            title: "Sign Up",
+            message: "Signed up successfully",
+            type: "success",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true
+            }
+          });
+          return history.push('/')
+        }
         store.addNotification({
-          title: "Sign Up",
-          message: "Signed up successfully",
-          type: "success",
+          title: 'Registration Error',
+          message: responseJson.message,
+          type: "warning",
           insert: "top",
           container: "top-right",
           animationIn: ["animate__animated", "animate__fadeIn"],
@@ -41,7 +57,6 @@ export default function Login () {
             onScreen: true
           }
         });
-        history.push('/')
       })
       .catch((error) => {
         console.error(error);
