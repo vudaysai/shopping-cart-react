@@ -13,7 +13,7 @@ const Header = () => {
 	const logout = () => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('isAdmin');
-		history.go(0);
+		history.push('/');
 	}
 
 	const orders = () => {
@@ -32,6 +32,7 @@ const Header = () => {
 				<Dropdown.Menu>
 					<Dropdown.Item onClick={orders}>Orders</Dropdown.Item>
 					<Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
+					{isAdmin === 'true' && <Dropdown.Item onClick={e => history.push('/users')}>Users</Dropdown.Item>}
 				</Dropdown.Menu>
 			</Dropdown>
 		</header>
