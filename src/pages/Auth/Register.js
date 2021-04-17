@@ -5,7 +5,7 @@ import { useHistory, Link } from 'react-router-dom'
 import Button from "react-bootstrap/Button";
 import "./Login.css";
 
-const URL = "http://localhost:5000/api/auth/register";
+const URL = process.env.REACT_APP_SERVER_URL + "api/auth/register";
 
 export default function Login () {
   const [email, setEmail] = useState("");

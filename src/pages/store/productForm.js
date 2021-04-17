@@ -11,7 +11,7 @@ const ProductForm = ({ product, isEdit, handleClose, show }) => {
 
   const handleSubmit = () => {
     const { name, price, imageURL } = data;
-    const URL = `http://localhost:5000/api/products/${isEdit ? data._id : ''}`;
+    const URL = `${process.env.REACT_APP_SERVER_URL}api/products/${isEdit ? data._id : ''}`;
     fetch(URL, {
       method: isEdit ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },

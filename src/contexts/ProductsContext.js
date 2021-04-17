@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 export const ProductsContext = createContext()
 
-const URL = "http://localhost:5000/api/products";
+const URL = process.env.REACT_APP_SERVER_URL + "api/products";
 
 const ProductsContextProvider = ({ children }) => {
 

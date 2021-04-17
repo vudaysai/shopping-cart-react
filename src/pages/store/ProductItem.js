@@ -19,7 +19,7 @@ const ProductItem = ({ product }) => {
 	const handleShow = () => setShow(true);
 
 	const deleteProduct = () => {
-		const URL = 'http://localhost:5000/api/products/' + product._id;
+		const URL = process.env.REACT_APP_SERVER_URL + 'api/products/' + product._id;
 		fetch(URL, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },

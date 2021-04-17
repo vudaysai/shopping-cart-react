@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Layout from '../../components/Layout';
 import './index.scss';
 
-const URL = "http://localhost:5000/api/transactions";
+const URL = process.env.REACT_APP_SERVER_URL + "api/transactions";
 
 const OrderGrid = () => {
 

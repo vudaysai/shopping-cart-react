@@ -3,6 +3,7 @@ import { CartReducer, sumItems } from './CartReducer';
 
 export const CartContext = createContext()
 
+const URL = process.env.REACT_APP_SERVER_URL + "api/transactions/checkout";
 const storage = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
 const initialState = { cartItems: storage, ...sumItems(storage), checkout: false };
 
@@ -32,7 +33,7 @@ const CartContextProvider = ({ children }) => {
 
 	const handleCheckout = () => {
 		const products = state.cartItems.map(({ name, quantity }) => ({ name, quantity }))
-		const URL = "http://localhost:5000/api/transactions/checkout";
+
 		fetch(URL, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
