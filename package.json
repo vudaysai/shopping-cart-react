@@ -1,15 +1,18 @@
 {
-  "name": "sopping-cart-react",
+  "name": "shopping-cart-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "bootswatch": "^4.6.0",
     "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1"
+    "react-helmet-async": "^1.0.5",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "node-sass": "^4.14.1"
   }
 }
