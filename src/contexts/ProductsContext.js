@@ -8,16 +8,21 @@ const ProductsContextProvider = ({ children }) => {
 	const [products, setProducts] = useState([]);
 
 	const fetchProducts = () => {
-		fetch(URL)
-			.then(res => res.json())
-			.then(
-				(result) => {
-					setProducts(result)
-				},
-				(error) => {
-					console.log(error)
-				}
-			)
+		const token = localStorage.getItem('token')
+		if (token) {
+			fetch(URL, {
+				headers: { token }
+			})
+				.then(res => res.json())
+				.then(
+					(result) => {
+						setProducts(result)
+					},
+					(error) => {
+						console.log(error)
+					}
+				)
+		}
 	}
 
 	useEffect(() => {

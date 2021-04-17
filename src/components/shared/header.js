@@ -8,23 +8,29 @@ import styles from './header.module.scss';
 const Header = () => {
 	const history = useHistory();
 	const { itemCount } = useContext(CartContext);
+	const isAdmin = localStorage.getItem('isAdmin');
 
 	const logout = () => {
 		localStorage.removeItem('token');
 		localStorage.removeItem('isAdmin');
 		history.go(0);
 	}
+
+	const orders = () => {
+		return history.push('/orders')
+	}
 	return (
 		<header className={styles.header}>
 			<Link to='/'>Store</Link>
 			<Link to='/about'>About</Link>
-			<Link to='/cart'> <CartIcon /> Cart ({itemCount})</Link>
+			{!(isAdmin === 'true') && <Link to='/cart'> <CartIcon /> Cart ({itemCount})</Link>}
 			<Dropdown >
 				<Dropdown.Toggle className={styles.sett} variant="Secondary" id="dropdown-basic">
 					Settings
 				</Dropdown.Toggle>
 
 				<Dropdown.Menu>
+					<Dropdown.Item onClick={orders}>Orders</Dropdown.Item>
 					<Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
 				</Dropdown.Menu>
 			</Dropdown>

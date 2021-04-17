@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import { store } from 'react-notifications-component';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { ProductsContext } from '../../contexts/ProductsContext';
@@ -13,11 +14,24 @@ const ProductForm = ({ product, isEdit, handleClose, show }) => {
     const URL = `http://localhost:5000/api/products/${isEdit ? data._id : ''}`;
     fetch(URL, {
       method: isEdit ? 'PATCH' : 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
       body: JSON.stringify({ name, price, imageURL })
     }).then((response) => response.json())
       .then((responseJson) => {
         if (responseJson) {
+          store.addNotification({
+            title: isEdit ? 'Updated' : 'Created',
+            message: isEdit ? "Product Updated" : 'Product Created',
+            type: "success",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+              duration: 5000,
+              onScreen: true
+            }
+          });
           handleClose()
           fetchProducts()
         }

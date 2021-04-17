@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
+import { store } from 'react-notifications-component';
 import { CartContext } from '../../contexts/CartContext';
 import { formatNumber } from '../../helpers/utils';
 import ProductForm from './productForm';
+import { ProductsContext } from '../../contexts/ProductsContext';
 
 const ProductItem = ({ product }) => {
 
 	const { addProduct, cartItems, increase } = useContext(CartContext);
+	const { fetchProducts } = useContext(ProductsContext)
 	const isAdmin = localStorage.getItem('isAdmin')
 	const isInCart = product => {
 		return !!cartItems.find(item => item._id === product._id);
@@ -15,6 +18,34 @@ const ProductItem = ({ product }) => {
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	const deleteProduct = () => {
+		const URL = 'http://localhost:5000/api/products/' + product._id;
+		fetch(URL, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json', token: localStorage.getItem('token') },
+		}).then((response) => response.json())
+			.then((responseJson) => {
+				if (responseJson) {
+					store.addNotification({
+						title: "Delete!",
+						message: "Product Deleted",
+						type: "danger",
+						insert: "top",
+						container: "top-right",
+						animationIn: ["animate__animated", "animate__fadeIn"],
+						animationOut: ["animate__animated", "animate__fadeOut"],
+						dismiss: {
+							duration: 5000,
+							onScreen: true
+						}
+					});
+					fetchProducts()
+				}
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}
 	const renderUserBasedActions = () => {
 		if (!(isAdmin === 'true')) {
 			return (
@@ -37,7 +68,7 @@ const ProductItem = ({ product }) => {
 		}
 		return (
 			<>
-				<button onClick={() => increase(product)} className="btn btn-outline-primary btn-sm mr-2">Delete</button>
+				<button onClick={deleteProduct} className="btn btn-outline-primary btn-sm mr-2">Delete</button>
 				<button onClick={handleShow} className="btn btn-outline-primary btn-sm">Edit</button>
 			</>
 		)
